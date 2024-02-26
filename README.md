@@ -57,7 +57,7 @@ First will go problem 1 solution, second one will be problem 2.
 **Pay attention** - whenever you will run, you **need to close plots after investigation
 to be able to continue running this project**, otherwise project will wait infinite.
 
-**Problem 2** and **problem 4** solutions find in problems_solved_in_txt directory.
+**Problem 3** and **problem 4** solutions find in problems_solved_in_txt directory.
 ## Project review
 Start review from ```main.py``` file. There I commented each step and problem solution.
 It will help you investigate high level solutions. If you want to go deeper into implementation
