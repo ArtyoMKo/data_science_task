@@ -1,0 +1,22 @@
+Problem: It's 3000 BC, and you are the leader of a tribe of 4000 people. You are leading your tribe to a new location where you
+ must build a circular settlement from scratch. How big will it be and how long will it take to build a stone wall
+ around it?
+
+
+My answer:
+In 3000 BC I had not strong tools for building walls. I have 4000 people and I can assume that there is 50 - 150 young
+man (fathers in the families). One family probably contains ~2 children, mother, father, grandmother and grandfather, each approximately have need
+ for 2.5 m^2 place. Each family need to have minimum 1 meter length near of home as a road. we have 50 families.
+ Lets calculate the place which we need. 2.5*6+2+2.5*15+6 (6 people + 2 meter as family place + 0.5 meter around home +
+ 1 meter per person for keeping foods, etc), -> * 50 (families) = 3050 m^2 + 300 m^2 (wall will have 1 meter length) =
+ 3350 m^2.
+
+Building wall will take
+We need to have 12000 stones (length of the wall 750 meter, height - 2-3 meter (2.5 avg), one stone have 0.5x0.25 shape,
+ wall will take 2 layers of the wall which means 750/0.5/0.25*2. Each day each man will work 6 hours. Each hour each
+ person will bring 3 stones. Means
+in 6 hour 1 man will bring 18 stones. we have 100 men, means each day they will bring 1800 stones. By simple calculation
+building the wall will take ~7 days.
+
+Results. settlement area will be approximately 3400 m^2 and building the surrounding wall will be built in 7 days
+approximately

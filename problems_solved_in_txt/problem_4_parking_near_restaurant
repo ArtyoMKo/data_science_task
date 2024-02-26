@@ -1,0 +1,14 @@
+Problem: Is there an inconsistency in the following paragraph?: "A suburban located Starbucks makes on average $100,000
+per month in revenue and has 10,500 square meters of an adjacent area dedicated to parking for visitors only. Despite
+good revenue and overall satisfaction with service, both the staff and visitors are complaining that parking is full
+more than half of the time."
+
+Mu answer:
+10500 m^2 can have 105x100 shape. One car have 15 m^2 (5x3 shape) + 15 m^2 (5x3 shape) as a road. It means 30 m^2 per car.
+It means in one time in the parking can park 350 cars.
+100000$ per month means 3300$ per month, 100$ per day. Because it is Starbucks, mainly people drink coffee by 3$ -> 33
+people per day. With more "bad" conditions cap of coffee can have 2$, with 2$ coffee they could have 50 people daily,
+which is too less. Lets compare, Starbucks have opportunity to have 300 cars in one time in the parking, even with 200 cars
+it is too less.
+
+Summary: it is super weird that with 100000$ income and with 10500 m^2 parking area they have a problem with parking.
