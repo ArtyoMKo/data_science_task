@@ -20,16 +20,11 @@ Slightly different, but related problem.
 """
 
 import numpy as np
-from numpy import copy, dot, diag
+from numpy import copy
 from numpy.linalg import norm
-import matplotlib.pyplot as plt
-from mlxtend.plotting import heatmap
-from scipy.linalg import eigh
 from scipy.stats import spearmanr
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.metrics import accuracy_score
 from sklearn.decomposition import PCA
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
@@ -42,6 +37,7 @@ class DataProcessing:
     """
     Class supposed to be used for data generation, normalization, splitting into train / test datasets
     """
+
     def __int__(self):
         self.correlation_matrix = np.array([])
 
@@ -52,13 +48,21 @@ class DataProcessing:
         :return: matrix
         """
         random_matrix = np.random.rand(shape, shape)
-        self.correlation_matrix, p = spearmanr(random_matrix)  # Calculating RHO correlation matrix
+        self.correlation_matrix, p = spearmanr(
+            random_matrix
+        )  # Calculating RHO correlation matrix
         if not self.is_valid_correlation_matrix():
-            logging.warning("random generated correlation matrix is not valid. Generating nearest valid matrix")
-            self.correlation_matrix = self.nearcorr()  # calculating nearest correlation matrix
+            logging.warning(
+                "random generated correlation matrix is not valid. Generating nearest valid matrix"
+            )
+            self.correlation_matrix = (
+                self.nearcorr()
+            )  # calculating nearest correlation matrix
         return self.correlation_matrix
 
-    def generate_normalized_data_based_correlation_matrix(self, count: int = 1000) -> np.ndarray:
+    def generate_normalized_data_based_correlation_matrix(
+        self, count: int = 1000
+    ) -> np.ndarray:
         """
         Generates normalized (in range [0, 1]) dataset with shape (count, correlation_matrix.shape[0])
         :param count: size of dataset
@@ -66,7 +70,9 @@ class DataProcessing:
         """
         nm = MinMaxScaler()
         data = np.random.multivariate_normal(
-            mean=np.zeros(self.correlation_matrix.shape[0]), cov=self.correlation_matrix, size=count
+            mean=np.zeros(self.correlation_matrix.shape[0]),
+            cov=self.correlation_matrix,
+            size=count,
         )
         data_nm = nm.fit_transform(data)
         return data_nm
@@ -79,7 +85,9 @@ class DataProcessing:
         :return: tuple of splitted datasets
         """
         data_x, data_y = data[:, :-1], np.round(data[:, -1])
-        x_train, x_test, y_train, y_test = train_test_split(data_x, data_y, test_size=test_size, stratify=data_y)
+        x_train, x_test, y_train, y_test = train_test_split(
+            data_x, data_y, test_size=test_size, stratify=data_y
+        )
         return x_train, x_test, y_train, y_test
 
     def is_valid_correlation_matrix(self, matrix: np.ndarray = None) -> bool:
@@ -105,8 +113,7 @@ class DataProcessing:
             return False
         return True
 
-    def nearcorr(self, max_iterations=100,
-                 except_on_too_many_iterations=True):
+    def nearcorr(self, max_iterations=100, except_on_too_many_iterations=True):
         """
         Calculates nearest correlation matrix
         :param max_iterations: maximum iterations for finding nearest matrix
@@ -120,7 +127,7 @@ class DataProcessing:
 
         eps = np.spacing(1)
         if not np.all((np.transpose(matrix) == matrix)):
-            raise ValueError('Input Matrix is not symmetric')
+            raise ValueError("Input Matrix is not symmetric")
         tol = eps * np.shape(matrix)[0] * np.array([1, 1])
         weights = np.ones(np.shape(matrix)[0])
         X = copy(matrix)
@@ -132,12 +139,16 @@ class DataProcessing:
         Whalf = np.sqrt(np.outer(weights, weights))
 
         iteration = 0
-        while max(rel_diffX, rel_diffY, rel_diffXY) > tol[0] or not self.is_valid_correlation_matrix(X):
+        while max(rel_diffX, rel_diffY, rel_diffXY) > tol[
+            0
+        ] or not self.is_valid_correlation_matrix(X):
             iteration += 1
             if iteration > max_iterations:
                 if except_on_too_many_iterations:
-                    raise ExceededMaxIterationsError(f"No solution (valid nearest correlation matrix) "
-                                                     f"found in {max_iterations} iterations")
+                    raise ExceededMaxIterationsError(
+                        f"No solution (valid nearest correlation matrix) "
+                        f"found in {max_iterations} iterations"
+                    )
                 else:
                     # exceptOnTooManyIterations is false so just silently
                     # return the result even though it has not converged
@@ -152,10 +163,10 @@ class DataProcessing:
             Yold = copy(Y)
             Y = copy(X)
             np.fill_diagonal(Y, 1)
-            normY = norm(Y, 'fro')
-            rel_diffX = norm(X - Xold, 'fro') / norm(X, 'fro')
-            rel_diffY = norm(Y - Yold, 'fro') / normY
-            rel_diffXY = norm(Y - X, 'fro') / normY
+            normY = norm(Y, "fro")
+            rel_diffX = norm(X - Xold, "fro") / norm(X, "fro")
+            rel_diffY = norm(Y - Yold, "fro") / normY
+            rel_diffXY = norm(Y - X, "fro") / normY
 
             X = copy(Y)
 
@@ -167,13 +178,14 @@ class DataProcessing:
         matrix = (matrix + matrix.T) / 2
         return matrix
 
+
 class Classifier:
     def __init__(self, models: list = None):
         if models is None:
-            models = [
-                {'name': 'LogisticRegression', 'estimator': LogisticRegression()}
-            ]
-        elif type(models) is not list or not all((type(model) == dict for model in models)):
+            models = [{"name": "LogisticRegression", "estimator": LogisticRegression()}]
+        elif type(models) is not list or not all(
+            (type(model) == dict for model in models)
+        ):
             raise WrongModelStructure(f"provided wrong structure of models.")
         self.models = models
         self.pipelines = []
@@ -186,23 +198,13 @@ class Classifier:
             pipeline = make_pipeline(
                 StandardScaler(),
                 PCA(n_components=PCA_components),
-                model['estimator'],
+                model["estimator"],
             )
-            self.pipelines.append({
-                'pipeline': pipeline,
-                'name': model['name']
-            })
+            self.pipelines.append({"pipeline": pipeline, "name": model["name"]})
 
     def estimate_classifier_pipelines(self, x_train, y_train, cv=5):
         for pipeline in self.pipelines:
             score = cross_val_score(
-                estimator=pipeline['pipeline'],
-                X=x_train, y=y_train,
-                cv=cv
+                estimator=pipeline["pipeline"], X=x_train, y=y_train, cv=cv
             )
-            self.scores.append(
-                {
-                    'name': pipeline['name'],
-                    'score': score
-                }
-            )
+            self.scores.append({"name": pipeline["name"], "score": score})
