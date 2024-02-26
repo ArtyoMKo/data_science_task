@@ -4,7 +4,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neural_network import MLPClassifier
 
-from data_processing_1_exc import DataProcessing, Classifier
+from problem_1_data_processing import DataProcessing, Classifier
 import logging
 from exceptions import ExceededMaxIterationsError, WrongModelStructure
 
