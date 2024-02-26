@@ -39,19 +39,31 @@ is full more than half of the time."
 ***
 
 # Guide for project and solution review
+## Running problem solutions
 **All solutions tested in main.py file**. I implemented tools encapsulated in multiple
 modules and by using them I'm providing exact results in **main.py**.
 Each problem solution tools **encapsulated** into different modules. For example
 **problem 1 solution tools implemented in problem_1_data_processing.py** module.
 
-For testing problem 1 and problem 2 to solutions run following command
+For testing problem 1 and problem 2 solutions run following command
 ```
 python main.py
 ```
+You will see plots which will present correlation matrices and other useful information.
+Take a look to the terminal logging messages, all metrics and results serialized there.
+
+First will go problem 1 solution, second one will be problem 2.
 
 **Pay attention** - whenever you will run, you **need to close plots after investigation
 to be able to continue running this project**, otherwise project will wait infinite.
+
+## Project review
+Start review from ```main.py``` file. There I commented each step and problem solution.
+It will help you investigate high level solutions. If you want to go deeper into implementation
+details you need to investigate ```problems_solution_tools``` directory modules.
+
 ***
+
 ### Steps for running service
 ***
 ## Installation:
