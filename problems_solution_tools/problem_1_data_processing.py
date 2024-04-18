@@ -39,7 +39,7 @@ class DataProcessing:
     """
 
     def __int__(self):
-        self.correlation_matrix = np.array([]
+        self.correlation_matrix = np.array([])
 
     def random_correlation_matrix(self, shape: int) -> np.ndarray:
         """
